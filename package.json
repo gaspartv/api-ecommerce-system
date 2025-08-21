@@ -10,6 +10,7 @@
     "start:dev": "node scripts/run-migration.js && ts-node-dev --respawn --transpile-only src/app.ts",
     "build": "tsc",
     "start": "node dist/index.js",
+    "pm2": "pm2 start ecosystem.config.json",
     "migration:create": "node scripts/create-migration.js",
     "migration:execute": "node scripts/run-migration.js"
   },

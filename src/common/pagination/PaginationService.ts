@@ -8,7 +8,6 @@ export class PaginationService {
       size = 10,
       sort_by = "created_at",
       order = "desc",
-      search = "",
     } = pagination;
     const offset = (page - 1) * size;
     const limit = size;

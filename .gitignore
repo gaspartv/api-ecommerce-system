@@ -5,3 +5,4 @@ docker-compose.yml
 .vscode
 sql.txt
 .vscode
+dist/

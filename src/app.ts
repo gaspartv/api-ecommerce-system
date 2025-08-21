@@ -11,7 +11,7 @@ app.use(cors({ origin: "*" }));
 app.use(express.json());
 
 const routes = new Routes();
-app.use("/", routes.execute());
+app.use("/api_system/", routes.execute());
 app.use(handleError);
 
 app.listen(env.PORT, () => {
