@@ -7,7 +7,7 @@ import { Routes } from "./modules/routes";
 
 const app = express();
 
-app.use(cors({ origin: "*" }));
+app.use(cors({ origin: env.FRONT_URL }));
 app.use(express.json());
 
 const routes = new Routes();
