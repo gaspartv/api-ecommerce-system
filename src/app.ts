@@ -7,7 +7,7 @@ import { Routes } from "./modules/routes";
 
 const app = express();
 
-app.use(cors({ origin: env.FRONT_URL }));
+app.use(cors({ origin: [env.FRONT_URL, "http://localhost:4004"] }));
 app.use(express.json());
 
 const routes = new Routes();

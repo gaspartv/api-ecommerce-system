@@ -32,18 +32,20 @@ export class BusinessService {
   }
 
   async get(query: IBusinessPagination) {
-    let handledQuery = PaginationService.paginate(query);
+    const handledQueryOptions = PaginationService.paginate(query);
+    let handleQueryWhere = "";
 
     if (query.search) {
-      handledQuery = `AND (name ILIKE '%${query.search}%' OR code ILIKE '%${query.search}%') ${handledQuery}`;
+      handleQueryWhere = `AND (name ILIKE '%${query.search}%' OR code ILIKE '%${query.search}%')`;
     }
 
     if (query.disabled !== undefined) {
-      handledQuery = `AND disabled = ${query.disabled} ${handledQuery}`;
+      handleQueryWhere = `AND disabled = ${query.disabled}`;
     }
 
     const { businesses, total } = await this.businessesRepository.get(
-      handledQuery
+      handledQueryOptions,
+      handleQueryWhere
     );
 
     const columns = [

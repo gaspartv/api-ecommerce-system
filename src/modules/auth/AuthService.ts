@@ -2,14 +2,14 @@ import { compare } from "bcrypt";
 import * as jwt from "jsonwebtoken";
 import { AppError } from "../../app.error";
 import { env } from "../../configs/env.config";
-import { UsersRepository } from "../../database/repositories/Users/UsersRepository";
+import { UsersSystemRepository } from "../../database/repositories/UsersSystem/UsersSystemRepository";
 import { SigninDto } from "./interfaces/signin.interface";
 import { SigninResponse } from "./interfaces/signin.response";
 
 export class AuthService {
-  protected usersRepository: UsersRepository;
+  protected usersRepository: UsersSystemRepository;
 
-  constructor(usersRepository: UsersRepository) {
+  constructor(usersRepository: UsersSystemRepository) {
     this.usersRepository = usersRepository;
   }
 

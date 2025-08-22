@@ -34,12 +34,12 @@ export class BusinessesRepository {
     );
   }
 
-  async get(sql: string) {
+  async get(handledQueryOptions: string, handleQueryWhere: string) {
     const total = await db.oneOrNone(
-      "SELECT COUNT(*) FROM businesses WHERE deleted_at IS NULL"
+      `SELECT COUNT(*) FROM businesses WHERE deleted_at IS NULL ${handleQueryWhere}`
     );
     const businesses = await db.manyOrNone(
-      `SELECT * FROM businesses WHERE deleted_at IS NULL ${sql}`
+      `SELECT * FROM businesses WHERE deleted_at IS NULL ${handleQueryWhere} ${handledQueryOptions}`
     );
     return {
       total: total.count ? parseInt(total.count, 10) : 0,

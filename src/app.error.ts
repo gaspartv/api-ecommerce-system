@@ -2,13 +2,13 @@ import { NextFunction, Request, Response } from "express";
 
 export class AppError extends Error {
   statusCode: number;
-  errors: [];
+  errors: any[];
 
-  constructor(message: string, statusCode: number = 400, errors = undefined) {
+  constructor(message: string, statusCode: number = 400, errors: any[] = []) {
     super();
     this.message = message;
     this.statusCode = statusCode;
-    this.errors = errors || [];
+    this.errors = errors;
   }
 }
 
