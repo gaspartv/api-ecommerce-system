@@ -25,6 +25,8 @@ export class SchemaZod {
 
   static businessGet() {
     return z.object({
+      id: z.string().optional(),
+      code: z.string().optional(),
       search: z.string().optional(),
       disabled: z
         .enum(["true", "false"], { message: "deve ser 'true' ou 'false'." })

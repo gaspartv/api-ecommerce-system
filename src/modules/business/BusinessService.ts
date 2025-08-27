@@ -32,8 +32,16 @@ export class BusinessService {
   }
 
   async get(query: IBusinessPagination) {
+    if (query.id) {
+      return await this.businessesRepository.findById(query.id);
+    }
+
     const handledQueryOptions = PaginationService.paginate(query);
     let handleQueryWhere = "";
+
+    if (query.code) {
+      handleQueryWhere = `AND code = '${query.code}'`;
+    }
 
     if (query.search) {
       handleQueryWhere = `AND (name ILIKE '%${query.search}%' OR code ILIKE '%${query.search}%')`;
