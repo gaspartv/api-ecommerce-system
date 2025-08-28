@@ -9,8 +9,12 @@ export class UsersSystemController {
   }
 
   getProfile = async (req: Request, res: Response) => {
-    const userId = req.id_user;
-    const response = await this.usersSystemService.getProfile(userId);
-    return res.json(response);
+    try {
+      const userId = req.id_user;
+      const response = await this.usersSystemService.getProfile(userId);
+      return res.json(response);
+    } catch (error) {
+      return res.status(500).json({ message: "Erro interno.", error });
+    }
   };
 }

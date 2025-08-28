@@ -11,6 +11,11 @@ export class SchemaZod {
   static businessCreate() {
     return z.object({
       name: z.string().min(1, "Nome da empresa é obrigatório."),
+      responsible: z.string().min(1, "Responsável é obrigatório."),
+      email: z.email("Email inválido").min(1, "Email é obrigatório."),
+      phone: z.string().min(1, "Telefone é obrigatório."),
+      cnpj: z.string().min(1, "CNPJ é obrigatório."),
+      notes: z.string().optional(),
     });
   }
 
@@ -20,6 +25,11 @@ export class SchemaZod {
       name: z.string().min(1, "Nome da empresa é obrigatório."),
       deleted: z.boolean({ message: "Campo de exclusão é obrigatório." }),
       disabled: z.boolean({ message: "Campo de desativação é obrigatório." }),
+      responsible: z.string().min(1, "Responsável é obrigatório."),
+      email: z.email("Email inválido").min(1, "Email é obrigatório."),
+      phone: z.string().min(1, "Telefone é obrigatório."),
+      cnpj: z.string().min(1, "CNPJ é obrigatório."),
+      notes: z.string().optional(),
     });
   }
 

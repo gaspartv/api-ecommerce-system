@@ -6,5 +6,9 @@ export interface BusinessesResponseDto {
   deleted_at: Date | null;
   disabled: boolean;
   name: string;
-  permissions: string[];
+  responsible: string | null;
+  email: string | null;
+  phone: string | null;
+  cnpj: string | null;
+  notes: string | null;
 }

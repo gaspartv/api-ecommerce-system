@@ -9,9 +9,13 @@ export class BusinessAddressesController {
   }
 
   createOrUpdate = async (req: Request, res: Response) => {
-    const response = await this.businessAddressesService.createOrUpdate(
-      req.body
-    );
-    return res.status(200).json(response);
+    try {
+      const response = await this.businessAddressesService.createOrUpdate(
+        req.body
+      );
+      return res.status(200).json(response);
+    } catch (error) {
+      return res.status(500).json({ message: "Erro interno.", error });
+    }
   };
 }

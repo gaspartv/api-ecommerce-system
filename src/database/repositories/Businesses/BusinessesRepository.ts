@@ -56,8 +56,8 @@ export class BusinessesRepository {
 
   create(dto: BusinessesCreateDto) {
     return db.one(
-      `INSERT INTO businesses (id, code, created_at, updated_at, deleted_at, disabled, name)
-        VALUES ($1, $2, $3, $4, $5, $6, $7)
+      `INSERT INTO businesses (id, code, created_at, updated_at, deleted_at, disabled, name, responsible, email, phone, cnpj, notes)
+        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
         RETURNING *`,
       [
         cuid(),
@@ -67,15 +67,33 @@ export class BusinessesRepository {
         null,
         false,
         dto.name,
+        dto.responsible,
+        dto.email,
+        dto.phone,
+        dto.cnpj,
+        dto.notes,
       ]
     );
   }
 
-  update(dto: BusinessesUpdateDto) {
+  async update(dto: BusinessesUpdateDto) {
+    const business = await this.findById(dto.id);
+
     const deletedAt = dto.deleted ? new Date() : null;
-    return db.one(
-      `UPDATE businesses SET name = $1, deleted_at = $2, disabled = $3 WHERE id = $4 RETURNING *`,
-      [dto.name, deletedAt, dto.disabled, dto.id]
+
+    return await db.one(
+      `UPDATE businesses SET name = $1, responsible = $2, email = $3, phone = $4, cnpj = $5, notes = $6, deleted_at = $7, disabled = $8 WHERE id = $9 RETURNING *`,
+      [
+        dto.name || business.name,
+        dto.responsible || business.responsible,
+        dto.email || business.email,
+        dto.phone || business.phone,
+        dto.cnpj || business.cnpj,
+        dto.notes || business.notes,
+        deletedAt,
+        dto.disabled || business.disabled,
+        dto.id,
+      ]
     );
   }
 

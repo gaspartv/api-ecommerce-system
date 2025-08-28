@@ -105,8 +105,6 @@ export class BusinessAddressesRepository {
       [dto.business_code]
     );
 
-    console.log("Addresses DB: ", addresses);
-
     const addressToCreate = [];
     const addressToUpdate = [];
     const addressIds: string[] = [];
@@ -114,7 +112,7 @@ export class BusinessAddressesRepository {
     for (const address of dto.addresses) {
       if (address?.id) {
         addressIds.push(address.id);
-        if (addresses.find((a) => a.id === address.id)) {
+        if (addresses?.find((a) => a.id === address.id)) {
           addressToUpdate.push({
             ...address,
             business_code: dto.business_code,
@@ -133,15 +131,10 @@ export class BusinessAddressesRepository {
       }
     }
 
-    const addressToDelete = addresses
-      .filter((address) => !addressIds.includes(address.id))
-      .map((address) => address.id);
-
-    console.log({
-      addressToCreate,
-      addressToUpdate,
-      addressToDelete,
-    });
+    const addressToDelete =
+      addresses
+        ?.filter((address) => !addressIds.includes(address.id))
+        ?.map((address) => address.id) || [];
 
     await Promise.all([
       ...addressToCreate.map((address) => this.create(address)),

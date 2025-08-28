@@ -9,7 +9,11 @@ export class AuthController {
   }
 
   signin = async (req: Request, res: Response) => {
-    const response = await this.authService.signin(req.body);
-    return res.status(201).json(response);
+    try {
+      const response = await this.authService.signin(req.body);
+      return res.status(201).json(response);
+    } catch (error) {
+      return res.status(500).json({ message: "Erro interno.", error });
+    }
   };
 }

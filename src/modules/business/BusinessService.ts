@@ -63,6 +63,11 @@ export class BusinessService {
       "deleted_at",
       "disabled",
       "name",
+      "responsible",
+      "email",
+      "phone",
+      "cnpj",
+      "notes",
     ];
 
     return PaginationService.result<BusinessesResponseDto>(
