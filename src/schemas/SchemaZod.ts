@@ -60,4 +60,24 @@ export class SchemaZod {
         .optional(),
     });
   }
+
+  static businessAddressesCreateOrUpdate() {
+    return z.object({
+      business_code: z.string(),
+      addresses: z.array(
+        z.object({
+          id: z.string().optional(),
+          name: z.string().min(1, "Nome do endereço é obrigatório."),
+          city: z.string().min(1, "Cidade é obrigatória."),
+          state: z.string().min(1, "Estado é obrigatório."),
+          number: z.string().min(1, "Número é obrigatório."),
+          address: z.string().min(1, "Endereço é obrigatório."),
+          country: z.string().min(1, "País é obrigatório."),
+          zip_code: z.string().min(1, "CEP é obrigatório."),
+          complement: z.string().optional(),
+          neighborhood: z.string().min(1, "Bairro é obrigatório."),
+        })
+      ),
+    });
+  }
 }

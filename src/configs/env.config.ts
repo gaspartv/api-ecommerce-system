@@ -6,6 +6,7 @@ const envSchema = yup.object({
   NODE_ENV: yup.string().oneOf(["develop", "homolog", "production"]).required(),
   PORT: yup.number().required(),
   FRONT_URL: yup.string().required(),
+  FRONT_DEV_URL: yup.string().required(),
   DATABASE_URL: yup.string().required(),
   JWT_SECRET: yup.string().required(),
   JWT_EXPIRES_IN_TIME: yup.number().min(0).max(86400000).required(),

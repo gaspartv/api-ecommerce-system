@@ -2,21 +2,26 @@ import { Router } from "express";
 import { ValidationSchemaZodMiddleware } from "../common/middlewares/ValidationSchemaZodMiddleware";
 import { VerifyTokenMiddleware } from "../common/middlewares/VerifyTokenMiddleware";
 import { AuthControllerFactory } from "../factory/AuthControllerFactory";
+import { BusinessAddressesControllerFactory } from "../factory/BusinessAddressesController";
 import { BusinessesControllerFactory } from "../factory/BusinessesControllerFactory";
 import { UsersSystemControllerFactory } from "../factory/UsersSystemControllerFactory";
 import { SchemaZod } from "../schemas/SchemaZod";
 import { AuthController } from "./auth/AuthController";
+import { BusinessAddressesController } from "./business-address/BusinessAddressController";
 import { BusinessController } from "./business/BusinessController";
 import { UsersSystemController } from "./users/UsersSystemController";
 
 export class Routes {
   protected authController: AuthController;
   protected businessController: BusinessController;
+  protected businessAddressesController: BusinessAddressesController;
   protected usersController: UsersSystemController;
 
   constructor() {
     this.authController = AuthControllerFactory.execute();
     this.businessController = BusinessesControllerFactory.execute();
+    this.businessAddressesController =
+      BusinessAddressesControllerFactory.execute();
     this.usersController = UsersSystemControllerFactory.execute();
   }
 
@@ -24,6 +29,7 @@ export class Routes {
     const router = Router();
     this.authRoutes(router);
     this.businessesRoutes(router);
+    this.businessAddressesRoutes(router);
     this.usersRoutes(router);
     return router;
   }
@@ -64,6 +70,16 @@ export class Routes {
         schemaQuery: SchemaZod.businessGet(),
       }),
       this.businessController.get
+    );
+  }
+
+  private businessAddressesRoutes(router: Router) {
+    router.put(
+      "/business-address",
+      ValidationSchemaZodMiddleware.execute({
+        schemaBody: SchemaZod.businessAddressesCreateOrUpdate(),
+      }),
+      this.businessAddressesController.createOrUpdate
     );
   }
 
