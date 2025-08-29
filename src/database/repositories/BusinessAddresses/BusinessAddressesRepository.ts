@@ -94,12 +94,12 @@ export class BusinessAddressesRepository {
   }
 
   async deleteMany(ids: string[]) {
-    return db.none(`DELETE FROM business_addresses WHERE id IN ($1:csv)`, [
-      ids,
-    ]);
+    if (ids.length === 0) return;
+    await db.none(`DELETE FROM business_addresses WHERE id IN ($1:csv)`, [ids]);
+    return;
   }
 
-  async updateMany(dto: BusinessAddressesUpdateManyDto) {
+  async createOrUpdate(dto: BusinessAddressesUpdateManyDto) {
     const addresses = await db.manyOrNone<{ id: string }>(
       `SELECT id FROM business_addresses WHERE business_code = $1 AND deleted_at IS NULL`,
       [dto.business_code]
@@ -131,10 +131,9 @@ export class BusinessAddressesRepository {
       }
     }
 
-    const addressToDelete =
-      addresses
-        ?.filter((address) => !addressIds.includes(address.id))
-        ?.map((address) => address.id) || [];
+    const addressToDelete = addresses
+      ?.filter((address) => !addressIds.includes(address.id))
+      ?.map((address) => address.id);
 
     await Promise.all([
       ...addressToCreate.map((address) => this.create(address)),

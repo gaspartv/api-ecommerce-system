@@ -9,6 +9,6 @@ export class BusinessAddressesService {
   }
 
   async createOrUpdate(dto: BusinessAddressesUpdateManyDto) {
-    return await this.businessAddressesRepository.updateMany(dto);
+    return await this.businessAddressesRepository.createOrUpdate(dto);
   }
 }

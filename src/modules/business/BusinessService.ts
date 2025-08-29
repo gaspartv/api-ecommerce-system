@@ -44,7 +44,14 @@ export class BusinessService {
     }
 
     if (query.search) {
-      handleQueryWhere = `AND (name ILIKE '%${query.search}%' OR code ILIKE '%${query.search}%')`;
+      handleQueryWhere = `AND (
+        name ILIKE '%${query.search}%' OR 
+        code ILIKE '%${query.search}%' OR
+        responsible ILIKE '%${query.search}%' OR
+        phone ILIKE '%${query.search}%' OR
+        email ILIKE '%${query.search}%' OR
+        cnpj ILIKE '%${query.search}%'
+      )`;
     }
 
     if (query.disabled !== undefined) {
@@ -57,15 +64,15 @@ export class BusinessService {
     );
 
     const columns = [
-      "code",
-      "created_at",
-      "updated_at",
-      "deleted_at",
-      "disabled",
       "name",
+      "disabled",
+      // "code",
+      "created_at",
+      // "updated_at",
+      "deleted_at",
       "responsible",
-      "email",
       "phone",
+      "email",
       "cnpj",
       "notes",
     ];
